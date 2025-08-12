@@ -81,19 +81,10 @@
         <header id="header" class="bg-gray-900/80 backdrop-blur-lg sticky top-0 z-40 border-b border-gray-700/50">
             <div class="container mx-auto px-6 py-4 flex justify-between items-center">
                 <a href="#" id="home-link" class="text-2xl font-bold text-white"><span id="portfolio-name-header"></span></a>
-                <nav class="hidden md:flex items-center space-x-8">
-                    <a href="#hero" class="nav-link text-gray-300 hover:text-cyan-400 transition duration-300">Beranda</a> 
-                    <a href="#about" class="nav-link text-gray-300 hover:text-cyan-400 transition duration-300">Tentang</a>
-                    <a href="#research" class="nav-link text-gray-300 hover:text-cyan-400 transition duration-300">Riset & Publikasi</a> 
-                    <a href="#contact" class="nav-link text-gray-300 hover:text-cyan-400 transition duration-300">Kontak</a>
-                </nav>
+                <nav id="desktop-nav-links" class="hidden md:flex items-center space-x-8"></nav>
                 <button id="mobile-menu-button" class="md:hidden"><i class="fas fa-bars text-2xl"></i></button>
             </div>
             <div id="mobile-menu" class="hidden md:hidden bg-gray-800">
-                <a href="#hero" class="block py-2 px-6 text-sm">Beranda</a> 
-                <a href="#about" class="block py-2 px-6 text-sm">Tentang</a>
-                <a href="#research" class="block py-2 px-6 text-sm">Riset & Publikasi</a> 
-                <a href="#contact" class="block py-2 px-6 text-sm">Kontak</a>
             </div>
         </header>
 
@@ -210,7 +201,7 @@
                 </div>
             </header>
             <div id="admin-tab-umum" class="admin-tab-content">
-                 <form id="general-settings-form" class="space-y-6"><div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div class="space-y-4 p-4 border rounded-lg bg-white"><h3 class="font-bold text-lg border-b pb-2">Info Utama</h3><div><label for="site-page-title">Judul Tab Browser</label><input type="text" id="site-page-title" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-name">Nama Anda</label><input type="text" id="site-name" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-hero-title">Judul Utama</label><input type="text" id="site-hero-title" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-hero-subtitle">Sub-judul</label><textarea id="site-hero-subtitle" rows="3" class="mt-1 w-full p-2 rounded-md"></textarea></div></div><div class="space-y-4 p-4 border rounded-lg bg-white"><h3 class="font-bold text-lg border-b pb-2">Bagian "Tentang Saya"</h3><div><label for="site-about-title">Judul "Tentang Saya"</label><input type="text" id="site-about-title" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-skills-title">Judul "Bidang Keahlian"</label><input type="text" id="site-skills-title" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-profile-photo">Upload Foto Profil</label><input type="file" id="site-profile-photo" class="mt-1 w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"></div><div><label for="site-about-me">Teks "Tentang Saya"</label><textarea id="site-about-me" rows="5" class="mt-1 w-full p-2 rounded-md"></textarea></div><div><label for="site-skills">Bidang Keahlian (pisahkan koma)</label><input type="text" id="site-skills" class="mt-1 w-full p-2 rounded-md"></div></div><div class="space-y-4 p-4 border rounded-lg bg-white md:col-span-2"><h3 class="font-bold text-lg border-b pb-2">Bagian Riset</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label for="site-research-title">Judul Utama Riset</label><input type="text" id="site-research-title" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-research-subtitle">Sub-judul Riset</label><input type="text" id="site-research-subtitle" class="mt-1 w-full p-2 rounded-md"></div></div></div><div class="space-y-4 p-4 border rounded-lg bg-white md:col-span-2"><h3 class="font-bold text-lg border-b pb-2">Kontak & Footer</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label for="site-contact-title">Judul Kontak</label><input type="text" id="site-contact-title" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-contact-subtitle">Sub-judul Kontak</label><input type="text" id="site-contact-subtitle" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-contact-email-intro">Teks Pengantar Email</label><input type="text" id="site-contact-email-intro" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-contact-email-address">Alamat Email</label><input type="email" id="site-contact-email-address" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-whatsapp-number">Nomor WhatsApp (contoh: 62812...)</label><input type="text" id="site-whatsapp-number" class="mt-1 w-full p-2 rounded-md"></div><div class="md:col-span-2"><label for="site-social-intro">Teks Pengantar Medsos</label><input type="text" id="site-social-intro" class="mt-1 w-full p-2 rounded-md"></div><div class="md:col-span-2"><label for="site-social-links">Tautan Medsos (satu per baris)</label><textarea id="site-social-links" rows="4" class="mt-1 w-full p-2 rounded-md"></textarea></div></div></div></div><div class="pt-4 text-right flex items-center justify-end gap-4"><span id="general-loader" class="hidden"></span><button type="submit" id="general-submit-btn" class="bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-700">Simpan Pengaturan</button></div></form>
+                 <form id="general-settings-form" class="space-y-6"><div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div class="space-y-4 p-4 border rounded-lg bg-white"><h3 class="font-bold text-lg border-b pb-2">Info Utama</h3><div><label for="site-page-title">Judul Tab Browser</label><input type="text" id="site-page-title" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-name">Nama Anda</label><input type="text" id="site-name" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-hero-title">Judul Utama</label><input type="text" id="site-hero-title" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-hero-subtitle">Sub-judul</label><textarea id="site-hero-subtitle" rows="3" class="mt-1 w-full p-2 rounded-md"></textarea></div></div><div class="space-y-4 p-4 border rounded-lg bg-white"><h3 class="font-bold text-lg border-b pb-2">Navigasi</h3><div><label for="site-nav-link1">Teks Link 1 (Beranda)</label><input type="text" id="site-nav-link1" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-nav-link2">Teks Link 2 (Tentang)</label><input type="text" id="site-nav-link2" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-nav-link3">Teks Link 3 (Riset)</label><input type="text" id="site-nav-link3" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-nav-link4">Teks Link 4 (Kontak)</label><input type="text" id="site-nav-link4" class="mt-1 w-full p-2 rounded-md"></div></div><div class="space-y-4 p-4 border rounded-lg bg-white"><h3 class="font-bold text-lg border-b pb-2">Bagian "Tentang Saya"</h3><div><label for="site-about-title">Judul "Tentang Saya"</label><input type="text" id="site-about-title" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-skills-title">Judul "Bidang Keahlian"</label><input type="text" id="site-skills-title" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-profile-photo">Upload Foto Profil</label><input type="file" id="site-profile-photo" class="mt-1 w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"></div><div><label for="site-about-me">Teks "Tentang Saya"</label><textarea id="site-about-me" rows="5" class="mt-1 w-full p-2 rounded-md"></textarea></div><div><label for="site-skills">Bidang Keahlian (pisahkan koma)</label><input type="text" id="site-skills" class="mt-1 w-full p-2 rounded-md"></div></div><div class="space-y-4 p-4 border rounded-lg bg-white md:col-span-2"><h3 class="font-bold text-lg border-b pb-2">Bagian Riset</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label for="site-research-title">Judul Utama Riset (di Beranda)</label><input type="text" id="site-research-title" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-research-subtitle">Sub-judul Riset (di Beranda)</label><input type="text" id="site-research-subtitle" class="mt-1 w-full p-2 rounded-md"></div><div class="md:col-span-2"><label for="site-research-list-title">Judul Halaman Daftar Riset Lengkap</label><input type="text" id="site-research-list-title" class="mt-1 w-full p-2 rounded-md"></div></div></div><div class="space-y-4 p-4 border rounded-lg bg-white md:col-span-2"><h3 class="font-bold text-lg border-b pb-2">Kontak & Footer</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label for="site-contact-title">Judul Kontak</label><input type="text" id="site-contact-title" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-contact-subtitle">Sub-judul Kontak</label><input type="text" id="site-contact-subtitle" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-contact-email-intro">Teks Pengantar Email</label><input type="text" id="site-contact-email-intro" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-contact-email-address">Alamat Email</label><input type="email" id="site-contact-email-address" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-whatsapp-number">Nomor WhatsApp (contoh: 62812...)</label><input type="text" id="site-whatsapp-number" class="mt-1 w-full p-2 rounded-md"></div><div class="md:col-span-2"><label for="site-social-intro">Teks Pengantar Medsos</label><input type="text" id="site-social-intro" class="mt-1 w-full p-2 rounded-md"></div><div class="md:col-span-2"><label for="site-social-links">Tautan Medsos (satu per baris)</label><textarea id="site-social-links" rows="4" class="mt-1 w-full p-2 rounded-md"></textarea></div></div></div></div><div class="pt-4 text-right flex items-center justify-end gap-4"><span id="general-loader" class="hidden"></span><button type="submit" id="general-submit-btn" class="bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-700">Simpan Pengaturan</button></div></form>
             </div>
             <div id="admin-tab-riset" class="admin-tab-content hidden">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8"><div class="lg:col-span-1"><h2 id="form-title" class="text-2xl font-bold mb-4">Tambah/Edit Riset</h2><form id="research-form" class="space-y-4"><input type="hidden" id="research-id"><div><label for="title">Judul</label><input type="text" id="title" class="mt-1 w-full p-2 rounded-md" required></div><div><label for="author">Penulis</label><input type="text" id="author" class="mt-1 w-full p-2 rounded-md" required></div><div><label for="date">Tanggal</label><input type="text" id="date" class="mt-1 w-full p-2 rounded-md" required></div><div><label for="journal">Jurnal</label><input type="text" id="journal" class="mt-1 w-full p-2 rounded-md"></div><div><label for="image">Upload Gambar</label><input type="file" id="image" class="mt-1 w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"></div><div><label for="pdfUrl">URL PDF</label><input type="url" id="pdfUrl" class="mt-1 w-full p-2 rounded-md"></div><div><label for="abstract">Abstrak</label><textarea id="abstract" rows="3" class="mt-1 w-full p-2 rounded-md" required></textarea></div><div><label for="content">Konten</label><textarea id="content" rows="6" class="mt-1 w-full p-2 rounded-md" required></textarea></div><div class="flex items-center space-x-4"><button type="submit" id="research-submit-btn" class="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700">Simpan</button><button type="button" id="cancel-edit-btn" class="w-full bg-gray-200 py-2 px-4 rounded-lg hidden">Batal</button></div><div id="research-loader" class="hidden flex items-center gap-2 text-sm"></div></form></div><div class="lg:col-span-2"><h2 class="text-2xl font-bold mb-4">Daftar Riset</h2><div id="research-list" class="space-y-4"></div></div></div>
@@ -251,6 +242,10 @@
                 name: '', 
                 heroTitle: '', 
                 heroSubtitle: '', 
+                navLink1: 'Beranda',
+                navLink2: 'Tentang',
+                navLink3: 'Riset & Publikasi',
+                navLink4: 'Kontak',
                 aboutTitle: 'Tentang Saya',
                 skillsTitle: 'Bidang Keahlian',
                 profilePhotoUrl: 'https://placehold.co/600x600/374151/e5e7eb?text=Foto+Anda', 
@@ -258,6 +253,7 @@
                 skills: '', 
                 researchTitle: 'Riset & Publikasi',
                 researchSubtitle: '',
+                researchListTitle: 'Semua Riset & Publikasi',
                 contactTitle: 'Hubungi Saya', 
                 contactSubtitle: '', 
                 contactEmailIntro: '', 
@@ -413,7 +409,7 @@
                 portfolio.aboutMeText.textContent = siteData.aboutMe;
                 portfolio.researchTitle.textContent = siteData.researchTitle;
                 portfolio.researchSubtitle.textContent = siteData.researchSubtitle;
-                portfolio.researchListTitle.textContent = siteData.researchTitle;
+                portfolio.researchListTitle.textContent = siteData.researchListTitle;
                 portfolio.contactTitle.textContent = siteData.contactTitle;
                 portfolio.contactSubtitle.textContent = siteData.contactSubtitle;
                 portfolio.contactEmailIntro.textContent = siteData.contactEmailIntro;
@@ -422,6 +418,8 @@
                 portfolio.socialIntroText.textContent = siteData.socialIntroText;
                 portfolio.copyrightText.innerHTML = `&copy; ${new Date().getFullYear()} ${siteData.name} Semua Hak Cipta Dilindungi.`;
                 
+                renderNavLinks();
+
                 if (siteData.whatsappNumber) {
                     const cleanNumber = siteData.whatsappNumber.replace(/[^0-9]/g, '');
                     portfolio.contactWhatsapp.href = `https://wa.me/${cleanNumber}`;
@@ -467,6 +465,37 @@
                 });
             }
             
+            function renderNavLinks() {
+                const desktopNav = document.getElementById('desktop-nav-links');
+                const mobileNav = document.getElementById('mobile-menu');
+                desktopNav.innerHTML = '';
+                mobileNav.innerHTML = '';
+
+                const navItems = [
+                    { text: siteData.navLink1, href: '#hero' },
+                    { text: siteData.navLink2, href: '#about' },
+                    { text: siteData.navLink3, href: '#research' },
+                    { text: siteData.navLink4, href: '#contact' }
+                ];
+
+                navItems.forEach(item => {
+                    if (item.text && item.text.trim() !== '') {
+                        const desktopLink = document.createElement('a');
+                        desktopLink.href = item.href;
+                        desktopLink.className = 'nav-link text-gray-300 hover:text-cyan-400 transition duration-300';
+                        desktopLink.textContent = item.text;
+                        desktopNav.appendChild(desktopLink);
+
+                        const mobileLink = document.createElement('a');
+                        mobileLink.href = item.href;
+                        mobileLink.className = 'block py-2 px-6 text-sm';
+                        mobileLink.textContent = item.text;
+                        mobileNav.appendChild(mobileLink);
+                    }
+                });
+                addNavEventListeners();
+            }
+
             function renderResearchGrid() {
                 portfolio.researchGrid.innerHTML = '';
                 const displayedResearch = researchData.slice(0, 3);
@@ -509,12 +538,17 @@
                 document.getElementById('site-name').value = siteData.name || '';
                 document.getElementById('site-hero-title').value = siteData.heroTitle || '';
                 document.getElementById('site-hero-subtitle').value = siteData.heroSubtitle || '';
+                document.getElementById('site-nav-link1').value = siteData.navLink1 || '';
+                document.getElementById('site-nav-link2').value = siteData.navLink2 || '';
+                document.getElementById('site-nav-link3').value = siteData.navLink3 || '';
+                document.getElementById('site-nav-link4').value = siteData.navLink4 || '';
                 document.getElementById('site-about-title').value = siteData.aboutTitle || '';
                 document.getElementById('site-skills-title').value = siteData.skillsTitle || '';
                 document.getElementById('site-about-me').value = siteData.aboutMe || '';
                 document.getElementById('site-skills').value = siteData.skills || '';
                 document.getElementById('site-research-title').value = siteData.researchTitle || '';
                 document.getElementById('site-research-subtitle').value = siteData.researchSubtitle || '';
+                document.getElementById('site-research-list-title').value = siteData.researchListTitle || '';
                 document.getElementById('site-contact-title').value = siteData.contactTitle || '';
                 document.getElementById('site-contact-subtitle').value = siteData.contactSubtitle || '';
                 document.getElementById('site-contact-email-intro').value = siteData.contactEmailIntro || '';
@@ -602,7 +636,8 @@
                                 </blockquote>
                             `;
                         }
-                        fullContentHTML += item.content;
+                        const formattedContent = item.content.replace(/\n/g, '<br>');
+                        fullContentHTML += formattedContent;
                         portfolio.detailContent.innerHTML = fullContentHTML;
 
                         portfolio.detailPdfLink.innerHTML = (item.pdfUrl && item.pdfUrl !== '#' && item.pdfUrl.trim() !== '') ? `<a href="${item.pdfUrl}" target="_blank" class="bg-cyan-500 text-white font-semibold px-8 py-3 rounded-lg hover:bg-cyan-600 inline-block"><i class="fas fa-download mr-2"></i> Unduh PDF</a>` : '';
@@ -718,6 +753,25 @@
                 });
             }
 
+            function addNavEventListeners() {
+                document.querySelectorAll('#home-link, .nav-link, #mobile-menu a, a[href^="#research"].bg-cyan-500, #more-research-btn').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const href = this.getAttribute('href');
+                        
+                        if (window.location.hash !== href) {
+                            history.pushState(null, '', href);
+                        }
+                        
+                        handleRouteChange();
+                        
+                        if (!mobileMenu.classList.contains('hidden')) { 
+                            mobileMenu.classList.add('hidden'); 
+                        }
+                    });
+                });
+            }
+
             authUI.loginForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 if (!auth) return;
@@ -765,23 +819,6 @@
                 history.back();
             });
             
-            document.querySelectorAll('#home-link, .nav-link, #mobile-menu a, a[href^="#research"].bg-cyan-500, #more-research-btn').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const href = this.getAttribute('href');
-                    
-                    if (window.location.hash !== href) {
-                        history.pushState(null, '', href);
-                    }
-                    
-                    handleRouteChange();
-                    
-                    if (!mobileMenu.classList.contains('hidden')) { 
-                        mobileMenu.classList.add('hidden'); 
-                    }
-                });
-            });
-
             portfolio.closeResearchListBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 history.back();
@@ -827,12 +864,17 @@
                 siteData.name = document.getElementById('site-name').value;
                 siteData.heroTitle = document.getElementById('site-hero-title').value;
                 siteData.heroSubtitle = document.getElementById('site-hero-subtitle').value;
+                siteData.navLink1 = document.getElementById('site-nav-link1').value;
+                siteData.navLink2 = document.getElementById('site-nav-link2').value;
+                siteData.navLink3 = document.getElementById('site-nav-link3').value;
+                siteData.navLink4 = document.getElementById('site-nav-link4').value;
                 siteData.aboutTitle = document.getElementById('site-about-title').value;
                 siteData.skillsTitle = document.getElementById('site-skills-title').value;
                 siteData.aboutMe = document.getElementById('site-about-me').value;
                 siteData.skills = document.getElementById('site-skills').value;
                 siteData.researchTitle = document.getElementById('site-research-title').value;
                 siteData.researchSubtitle = document.getElementById('site-research-subtitle').value;
+                siteData.researchListTitle = document.getElementById('site-research-list-title').value;
                 siteData.contactTitle = document.getElementById('site-contact-title').value;
                 siteData.contactSubtitle = document.getElementById('site-contact-subtitle').value;
                 siteData.contactEmailIntro = document.getElementById('site-contact-email-intro').value;

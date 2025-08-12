@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Profesional - Ahli Ekonomi Syariah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #111827; }
+        .hidden { display: none; }
+        .prose { color: #d1d5db; }
+        .prose h1, .prose h2, .prose h3 { color: #f9fafb; }
+        .prose a { color: #67e8f9; }
+        .prose blockquote { border-left-color: #0891b2; color: #9ca3af; }
+        
+        /* Gaya untuk Panel Admin & Login */
+        .panel-overlay { background-color: rgba(0, 0, 0, 0.7); }
+        .panel-content { background-color: #f3f4f6; color: #1f2937; }
+        .panel-content label { font-weight: 600; }
+        .panel-content input, .panel-content textarea { background-color: #fff; border: 1px solid #d1d5db; }
+        .admin-tab-btn.active { background-color: #3b82f6; color: white; }
+        .admin-tab-btn { background-color: #e5e7eb; }
+    </style>
+</head>
+<body class="text-gray-300">
+
+    <!-- ===== BAGIAN PORTFOLIO (UNTUK PENGUNJUNG) ===== -->
+    <div id="portfolio-content">
+        <header id="header" class="bg-gray-900/80 backdrop-blur-lg sticky top-0 z-40 border-b border-gray-700/50">
+            <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <a href="#" id="home-link" class="text-2xl font-bold text-white"><span id="portfolio-name-header"></span></a>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#hero" class="nav-link">Beranda</a> <a href="#about" class="nav-link">Tentang</a>
+                    <a href="#research" class="nav-link">Riset</a> <a href="#contact" class="nav-link">Kontak</a>
+                </nav>
+                <button id="mobile-menu-button" class="md:hidden"><i class="fas fa-bars text-2xl"></i></button>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden bg-gray-800">
+                 <a href="#hero" class="block py-2 px-6 text-sm">Beranda</a> <a href="#about" class="block py-2 px-6 text-sm">Tentang</a>
+                 <a href="#research" class="block py-2 px-6 text-sm">Riset</a> <a href="#contact" class="block py-2 px-6 text-sm">Kontak</a>
+            </div>
+        </header>
+
+        <div id="main-content">
+            <section id="hero" class="min-h-[80vh] flex items-center bg-gray-900">
+                <div class="container mx-auto px-6 py-16 text-center">
+                    <h1 id="hero-title" class="text-4xl md:text-6xl font-bold text-white leading-tight mb-4"></h1>
+                    <p id="hero-subtitle" class="text-lg md:text-xl text-gray-400 mb-8"></p>
+                    <a href="#research" class="bg-cyan-500 text-white font-semibold px-8 py-3 rounded-lg hover:bg-cyan-600 transition-transform transform hover:scale-105 duration-300 inline-block">Lihat Karya Saya</a>
+                </div>
+            </section>
+
+            <section id="about" class="py-20 md:py-32 bg-gray-800">
+                <div class="container mx-auto px-6">
+                    <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+                        <div><img id="profile-photo" src="" alt="Foto Profil Profesional" class="rounded-lg shadow-2xl shadow-cyan-500/10 w-full"></div>
+                        <div>
+                            <h2 class="text-3xl font-bold text-white mb-4">Tentang Saya</h2>
+                            <p id="about-me-text" class="text-gray-400 mb-6"></p>
+                            <h3 class="text-xl font-semibold text-white mb-3">Bidang Keahlian:</h3>
+                            <div id="skills-container" class="flex flex-wrap gap-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="research" class="py-20 md:py-32 bg-gray-900">
+                <div class="container mx-auto px-6">
+                    <div class="text-center max-w-2xl mx-auto mb-12">
+                        <h2 class="text-3xl font-bold text-white mb-4">Riset & Publikasi</h2>
+                        <p class="text-gray-400">Berikut adalah beberapa karya tulis dan riset yang telah saya hasilkan.</p>
+                    </div>
+                    <div id="research-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+                </div>
+            </section>
+
+            <section id="contact" class="py-20 md:py-32 bg-gray-800">
+                 <div class="container mx-auto px-6">
+                    <div class="text-center max-w-2xl mx-auto mb-12">
+                        <h2 id="contact-title" class="text-3xl font-bold text-white mb-4"></h2>
+                        <p id="contact-subtitle" class="text-gray-400"></p>
+                    </div>
+                    <div class="max-w-xl mx-auto bg-gray-900 p-8 rounded-lg border border-gray-700 shadow-2xl shadow-cyan-500/10">
+                         <p id="contact-email-intro" class="text-center text-lg text-gray-300"></p>
+                        <a id="contact-email" href="" class="text-center block text-xl md:text-2xl font-semibold text-cyan-400 my-4 hover:underline"></a>
+                        <a id="contact-whatsapp" href="" target="_blank" class="hidden flex items-center justify-center text-lg text-cyan-400 hover:underline my-4">
+                            <i class="fab fa-whatsapp text-2xl mr-3"></i>
+                            <span id="whatsapp-number-text"></span>
+                        </a>
+                        <p id="social-intro-text" class="text-center text-gray-400 mt-8"></p>
+                        <div id="social-links-container" class="flex justify-center space-x-6 mt-4"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="detail-view" class="hidden">
+            <div class="container mx-auto px-6 py-16 md:py-24"><article class="max-w-3xl mx-auto"><button id="close-detail" class="text-gray-300 hover:text-cyan-400 mb-8">&larr; Kembali</button><h1 id="detail-title" class="text-3xl md:text-5xl font-bold text-white leading-tight mb-4"></h1><div id="detail-meta" class="text-gray-400 mb-8"></div><img id="detail-image" src="" alt="Gambar Riset" class="rounded-lg shadow-2xl w-full mb-12"><div id="detail-content" class="prose prose-lg max-w-none"></div><div id="detail-pdf-link" class="mt-12 text-center"></div></article></div>
+        </div>
+
+        <footer class="bg-gray-900 border-t border-gray-800">
+            <div class="container mx-auto px-6 py-8 text-center text-gray-400">
+                <p id="copyright-text"></p>
+                <div id="auth-container" class="mt-4">
+                    <button id="login-btn" class="text-xs text-gray-600 hover:text-gray-400 transition">Admin Login</button>
+                    <button id="open-admin-btn" class="hidden text-xs text-gray-600 hover:text-gray-400 transition">Admin Panel</button>
+                    <button id="logout-btn" class="hidden ml-4 text-xs text-red-500 hover:text-red-400 transition">Logout</button>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ===== BAGIAN LOGIN MODAL (AWALNYA TERSEMBUNYI) ===== -->
+    <div id="login-modal-overlay" class="hidden panel-overlay fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="panel-content w-full max-w-sm p-6 rounded-lg shadow-xl relative">
+            <button id="close-login-btn" class="absolute top-2 right-4 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+            <h2 class="text-2xl font-bold mb-4 text-center">Admin Login</h2>
+            <form id="login-form">
+                <div class="mb-4">
+                    <label for="email" class="block text-sm mb-1">Email</label>
+                    <input type="email" id="email" class="w-full p-2 rounded-md" required>
+                </div>
+                <div class="mb-6">
+                    <label for="password" class="block text-sm mb-1">Password</label>
+                    <input type="password" id="password" class="w-full p-2 rounded-md" required>
+                </div>
+                <p id="login-error" class="text-red-500 text-sm mb-4 text-center"></p>
+                <div>
+                    <button type="submit" id="login-submit-btn" class="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== BAGIAN ADMIN PANEL (AWALNYA TERSEMBUNYI) ===== -->
+    <div id="admin-panel-overlay" class="hidden panel-overlay fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div id="admin-panel-content" class="panel-content w-full max-w-6xl max-h-[90vh] overflow-y-auto p-6 rounded-lg shadow-xl relative">
+            <button id="close-admin-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+            <header class="mb-6 border-b pb-4">
+                <h1 class="text-3xl font-bold text-gray-900">Admin Panel</h1>
+                <div class="mt-4 flex space-x-2">
+                    <button data-tab="umum" class="admin-tab-btn px-4 py-2 rounded-md font-semibold active">Pengaturan Umum</button>
+                    <button data-tab="riset" class="admin-tab-btn px-4 py-2 rounded-md font-semibold">Kelola Riset</button>
+                </div>
+            </header>
+            <div id="admin-tab-umum" class="admin-tab-content">
+                 <form id="general-settings-form" class="space-y-6"><div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div class="space-y-4 p-4 border rounded-lg bg-white"><h3 class="font-bold text-lg border-b pb-2">Info Utama</h3><div><label for="site-name">Nama Anda</label><input type="text" id="site-name" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-hero-title">Judul Utama</label><input type="text" id="site-hero-title" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-hero-subtitle">Sub-judul</label><textarea id="site-hero-subtitle" rows="3" class="mt-1 w-full p-2 rounded-md"></textarea></div></div><div class="space-y-4 p-4 border rounded-lg bg-white"><h3 class="font-bold text-lg border-b pb-2">"Tentang Saya"</h3><div><label for="site-profile-photo">Upload Foto Profil</label><input type="file" id="site-profile-photo" class="mt-1 w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"></div><div><label for="site-about-me">Teks "Tentang Saya"</label><textarea id="site-about-me" rows="5" class="mt-1 w-full p-2 rounded-md"></textarea></div><div><label for="site-skills">Bidang Keahlian (pisahkan koma)</label><input type="text" id="site-skills" class="mt-1 w-full p-2 rounded-md"></div></div><div class="space-y-4 p-4 border rounded-lg bg-white md:col-span-2"><h3 class="font-bold text-lg border-b pb-2">Kontak & Footer</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label for="site-contact-title">Judul Kontak</label><input type="text" id="site-contact-title" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-contact-subtitle">Sub-judul Kontak</label><input type="text" id="site-contact-subtitle" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-contact-email-intro">Teks Pengantar Email</label><input type="text" id="site-contact-email-intro" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-contact-email-address">Alamat Email</label><input type="email" id="site-contact-email-address" class="mt-1 w-full p-2 rounded-md"></div><div><label for="site-whatsapp-number">Nomor WhatsApp (contoh: 62812...)</label><input type="text" id="site-whatsapp-number" class="mt-1 w-full p-2 rounded-md"></div><div class="md:col-span-2"><label for="site-social-intro">Teks Pengantar Medsos</label><input type="text" id="site-social-intro" class="mt-1 w-full p-2 rounded-md"></div><div class="md:col-span-2"><label for="site-social-links">Tautan Medsos (satu per baris)</label><textarea id="site-social-links" rows="4" class="mt-1 w-full p-2 rounded-md"></textarea></div></div></div></div><div class="pt-4 text-right"><button type="submit" class="bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-700">Simpan Pengaturan</button></div></form>
+            </div>
+            <div id="admin-tab-riset" class="admin-tab-content hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8"><div class="lg:col-span-1"><h2 id="form-title" class="text-2xl font-bold mb-4">Tambah/Edit Riset</h2><form id="research-form" class="space-y-4"><input type="hidden" id="research-id"><div><label for="title">Judul</label><input type="text" id="title" class="mt-1 w-full p-2 rounded-md" required></div><div><label for="author">Penulis</label><input type="text" id="author" class="mt-1 w-full p-2 rounded-md" required></div><div><label for="date">Tanggal</label><input type="text" id="date" class="mt-1 w-full p-2 rounded-md" required></div><div><label for="journal">Jurnal</label><input type="text" id="journal" class="mt-1 w-full p-2 rounded-md"></div><div><label for="image">Upload Gambar</label><input type="file" id="image" class="mt-1 w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"></div><div><label for="pdfUrl">URL PDF</label><input type="url" id="pdfUrl" class="mt-1 w-full p-2 rounded-md"></div><div><label for="abstract">Abstrak</label><textarea id="abstract" rows="3" class="mt-1 w-full p-2 rounded-md" required></textarea></div><div><label for="content">Konten</label><textarea id="content" rows="6" class="mt-1 w-full p-2 rounded-md" required></textarea></div><div class="flex space-x-4"><button type="submit" class="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700">Simpan</button><button type="button" id="cancel-edit-btn" class="w-full bg-gray-200 py-2 px-4 rounded-lg hidden">Batal</button></div></form></div><div class="lg:col-span-2"><h2 class="text-2xl font-bold mb-4">Daftar Riset</h2><div id="research-list" class="space-y-4"></div></div></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Firebase SDK -->
+    <script type="module">
+        document.addEventListener('DOMContentLoaded', () => {
+            // Import fungsi yang diperlukan
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+            import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+            import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+            let app, auth, db;
+            
+            // --- DATA DEFAULT ---
+            const defaultSiteData = { name: 'Anas Basuki, S.E.', heroTitle: 'Analis & Peneliti Ekonomi Syariah', heroSubtitle: 'Mendedikasikan diri pada analisis mendalam dan riset inovatif untuk pengembangan sektor keuangan dan ekonomi berbasis syariah.', profilePhotoUrl: 'https://placehold.co/600x600/374151/e5e7eb?text=Foto+Anda', aboutMe: 'Halo! Saya Anas Basuki, S.E., seorang Magister Ekonomi Syariah dengan fokus pada analisis kebijakan fiskal Islam dan pengembangan produk keuangan syariah. Saya menggabungkan pemahaman teori yang kuat dengan kemampuan analisis kuantitatif dan kualitatif untuk menghasilkan wawasan yang berdampak.', skills: 'Keuangan Islam, Fiqh Muamalat, Analisis Kebijakan, Manajemen Zakat & Wakaf, Ekonometrika, Riset Kualitatif', contactTitle: 'Hubungi Saya', contactSubtitle: 'Saya terbuka untuk diskusi, peluang karir, atau kolaborasi.', contactEmailIntro: 'Anda dapat menghubungi saya melalui email di:', contactEmail: 'emailanda@contoh.com', whatsappNumber: '6281234567890', socialIntroText: 'Atau temukan profil profesional saya di:', socialLinks: 'https://linkedin.com/in/namaanda\nhttps://www.youtube.com/channel/namaanda\nhttps://www.tiktok.com/@namaanda',};
+            const defaultResearchData = [{ id: 'tesis-magister', title: 'Judul Tesis Magister Anda', author: 'Anas Basuki, S.E.', date: '11 Agustus 2025', journal: 'Tesis Magister, Universitas Gadjah Mada', image: 'https://placehold.co/600x400/3b82f6/ffffff?text=Tesis+Magister', abstract: 'Abstrak singkat mengenai tesis Anda. Jelaskan metodologi, temuan utama, dan implikasi dari riset yang Anda lakukan.', content: `<h2>Abstrak</h2><p>Konten lengkap tesis...</p>`, pdfUrl: '#' },{ id: 'artikel-jurnal', title: 'Judul Artikel Jurnal', author: 'Anas Basuki, S.E.', date: '20 Juni 2024', journal: 'Jurnal Ekonomi Syariah Vol. 5, No. 2', image: 'https://placehold.co/600x400/84cc16/ffffff?text=Artikel+Jurnal', abstract: 'Deskripsi singkat tentang artikel yang diterbitkan. Sebutkan nama jurnal, volume, dan fokus utama dari tulisan tersebut.', content: `<h2>Abstrak</h2><p>Konten lengkap artikel jurnal...</p>`, pdfUrl: '#' },{ id: 'makalah-konferensi', title: 'Judul Makalah Konferensi', author: 'Anas Basuki, S.E.', date: '15 Maret 2024', journal: 'Konferensi Internasional Ekonomi Islam', image: 'https://placehold.co/600x400/f97316/ffffff?text=Makalah+Konferensi', abstract: 'Penjelasan singkat tentang makalah yang dipresentasikan. Sebutkan nama konferensi dan kontribusi utama dari makalah Anda.', content: `<h2>Abstrak</h2><p>Konten lengkap makalah...</p>`, pdfUrl: '#' }];
+
+            let siteData = defaultSiteData;
+            let researchData = defaultResearchData;
+            let currentUser = null;
+
+            // --- ELEMEN DOM ---
+            const portfolio = { nameHeader: document.getElementById('portfolio-name-header'), heroTitle: document.getElementById('hero-title'), heroSubtitle: document.getElementById('hero-subtitle'), profilePhoto: document.getElementById('profile-photo'), aboutMeText: document.getElementById('about-me-text'), skillsContainer: document.getElementById('skills-container'), contactTitle: document.getElementById('contact-title'), contactSubtitle: document.getElementById('contact-subtitle'), contactEmailIntro: document.getElementById('contact-email-intro'), contactEmail: document.getElementById('contact-email'), contactWhatsapp: document.getElementById('contact-whatsapp'), whatsappNumberText: document.getElementById('whatsapp-number-text'), socialIntroText: document.getElementById('social-intro-text'), socialLinksContainer: document.getElementById('social-links-container'), copyrightText: document.getElementById('copyright-text'), researchGrid: document.getElementById('research-grid'), mainContent: document.getElementById('main-content'), detailView: document.getElementById('detail-view'), closeDetailBtn: document.getElementById('close-detail'), };
+            const admin = { overlay: document.getElementById('admin-panel-overlay'), openBtn: document.getElementById('open-admin-btn'), closeBtn: document.getElementById('close-admin-btn'), tabs: document.querySelectorAll('.admin-tab-btn'), tabContents: document.querySelectorAll('.admin-tab-content'), generalForm: document.getElementById('general-settings-form'), researchForm: document.getElementById('research-form'), researchList: document.getElementById('research-list'), cancelEditBtn: document.getElementById('cancel-edit-btn'), formTitle: document.getElementById('form-title'), };
+            const authUI = { loginModal: document.getElementById('login-modal-overlay'), loginBtn: document.getElementById('login-btn'), logoutBtn: document.getElementById('logout-btn'), loginForm: document.getElementById('login-form'), closeLoginBtn: document.getElementById('close-login-btn'), loginError: document.getElementById('login-error') };
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+
+            // --- FUNGSI ---
+            async function uploadToCloudinary(file) {
+                // Placeholder for Cloudinary variables - will be replaced by Netlify build
+                const CLOUDINARY_CLOUD_NAME = "__CLOUDINARY_CLOUD_NAME__";
+                const CLOUDINARY_UPLOAD_PRESET = "__CLOUDINARY_UPLOAD_PRESET__";
+                
+                if (CLOUDINARY_CLOUD_NAME.startsWith("__") || !CLOUDINARY_CLOUD_NAME) {
+                    alert("Konfigurasi Cloudinary tidak ditemukan. Deploy ulang di Netlify.");
+                    return null;
+                }
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+                try {
+                    const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                        method: 'POST',
+                        body: formData,
+                    });
+                    const data = await response.json();
+                    return data.secure_url;
+                } catch (error) {
+                    console.error('Cloudinary upload error:', error);
+                    alert('Gagal mengunggah gambar. Periksa konsol untuk detail.');
+                    return null;
+                }
+            }
+            
+            async function fetchData(userId) {
+                if (!db) return; // Jangan fetch jika firebase tidak terhubung
+                const docRef = doc(db, "portfolios", userId);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    siteData = data.siteData;
+                    researchData = data.researchData;
+                } else {
+                    console.log("No such document! Creating default data for new user.");
+                    siteData = defaultSiteData;
+                    researchData = defaultResearchData;
+                    if (currentUser) {
+                        await saveData();
+                    }
+                }
+                renderAll();
+            }
+
+            async function saveData() {
+                if (!currentUser || !db) return;
+                const docRef = doc(db, "portfolios", currentUser.uid);
+                await setDoc(docRef, { siteData, researchData });
+            }
+            
+            function renderAll() {
+                renderSiteData();
+                renderResearchGrid();
+                renderAdminResearchList();
+            }
+            
+            function renderSiteData() {
+                portfolio.nameHeader.textContent = siteData.name;
+                portfolio.heroTitle.textContent = siteData.heroTitle;
+                portfolio.heroSubtitle.textContent = siteData.heroSubtitle;
+                portfolio.profilePhoto.src = siteData.profilePhotoUrl;
+                portfolio.aboutMeText.textContent = siteData.aboutMe;
+                portfolio.contactTitle.textContent = siteData.contactTitle;
+                portfolio.contactSubtitle.textContent = siteData.contactSubtitle;
+                portfolio.contactEmailIntro.textContent = siteData.contactEmailIntro;
+                portfolio.contactEmail.href = `mailto:${siteData.contactEmail}`;
+                portfolio.contactEmail.textContent = siteData.contactEmail;
+                portfolio.socialIntroText.textContent = siteData.socialIntroText;
+                portfolio.copyrightText.innerHTML = `&copy; ${new Date().getFullYear()} ${siteData.name}. Semua Hak Cipta Dilindungi.`;
+                
+                if (siteData.whatsappNumber) {
+                    const cleanNumber = siteData.whatsappNumber.replace(/[^0-9]/g, '');
+                    portfolio.contactWhatsapp.href = `https://wa.me/${cleanNumber}`;
+                    portfolio.whatsappNumberText.textContent = siteData.whatsappNumber;
+                    portfolio.contactWhatsapp.classList.remove('hidden');
+                } else {
+                    portfolio.contactWhatsapp.classList.add('hidden');
+                }
+
+                const skillColors = ['green', 'blue', 'yellow', 'purple', 'sky', 'red'];
+                portfolio.skillsContainer.innerHTML = '';
+                siteData.skills.split(',').forEach((skill, index) => {
+                    if (skill.trim()) {
+                        const color = skillColors[index % skillColors.length];
+                        const span = document.createElement('span');
+                        span.className = `bg-${color}-900/50 text-${color}-300 text-sm font-medium px-3 py-1 rounded-full border border-${color}-800`;
+                        span.textContent = skill.trim();
+                        portfolio.skillsContainer.appendChild(span);
+                    }
+                });
+
+                portfolio.socialLinksContainer.innerHTML = '';
+                siteData.socialLinks.split('\n').forEach(link => {
+                    const url = link.trim();
+                    if (!url) return;
+                    let iconClass = 'fas fa-link';
+                    if (url.includes('linkedin.com')) iconClass = 'fab fa-linkedin';
+                    else if (url.includes('github.com')) iconClass = 'fab fa-github';
+                    else if (url.includes('twitter.com')) iconClass = 'fab fa-twitter';
+                    else if (url.includes('facebook.com')) iconClass = 'fab fa-facebook';
+                    else if (url.includes('tiktok.com')) iconClass = 'fab fa-tiktok';
+                    else if (url.includes('youtube.com')) iconClass = 'fab fa-youtube';
+                    else if (url.includes('researchgate.net')) iconClass = 'fab fa-researchgate';
+                    else if (url.includes('academia.edu')) iconClass = 'fas fa-graduation-cap';
+                    
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.target = '_blank';
+                    a.className = 'text-gray-400 hover:text-cyan-400 transition duration-300 text-2xl';
+                    a.innerHTML = `<i class="${iconClass}"></i>`;
+                    portfolio.socialLinksContainer.appendChild(a);
+                });
+            }
+            
+            function renderResearchGrid() {
+                portfolio.researchGrid.innerHTML = '';
+                researchData.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-gray-800 rounded-lg overflow-hidden border border-gray-700 hover:border-cyan-500/50 transition-all duration-300 transform hover:-translate-y-2';
+                    card.innerHTML = `<img src="${item.image}" alt="${item.title}" class="w-full h-56 object-cover"><div class="p-6"><h3 class="text-xl font-semibold mb-2 text-white">${item.title}</h3><p class="text-gray-400 mb-4 text-sm">${item.abstract}</p><button data-id="${item.id}" class="read-more-btn text-cyan-400 font-semibold hover:underline">Baca Selengkapnya &rarr;</button></div>`;
+                    portfolio.researchGrid.appendChild(card);
+                });
+            }
+            
+            function showDetailView(id) {
+                const item = researchData.find(p => p.id === id);
+                if (!item) return;
+                document.getElementById('detail-title').textContent = item.title;
+                document.getElementById('detail-meta').innerHTML = `<span>Oleh: ${item.author}</span> &bull; <span>${item.date}</span> &bull; <span>${item.journal}</span>`;
+                document.getElementById('detail-image').src = item.image;
+                document.getElementById('detail-content').innerHTML = item.content;
+                document.getElementById('detail-pdf-link').innerHTML = (item.pdfUrl && item.pdfUrl !== '#') ? `<a href="${item.pdfUrl}" target="_blank" class="bg-cyan-500 text-white font-semibold px-8 py-3 rounded-lg hover:bg-cyan-600 inline-block"><i class="fas fa-download mr-2"></i> Unduh PDF</a>` : '';
+                portfolio.mainContent.classList.add('hidden');
+                portfolio.detailView.classList.remove('hidden');
+                window.scrollTo(0, 0);
+            }
+            
+            function hideDetailView() {
+                portfolio.detailView.classList.add('hidden');
+                portfolio.mainContent.classList.remove('hidden');
+            }
+            
+            function populateAdminForms() {
+                document.getElementById('site-name').value = siteData.name;
+                document.getElementById('site-hero-title').value = siteData.heroTitle;
+                document.getElementById('site-hero-subtitle').value = siteData.heroSubtitle;
+                document.getElementById('site-about-me').value = siteData.aboutMe;
+                document.getElementById('site-skills').value = siteData.skills;
+                document.getElementById('site-contact-title').value = siteData.contactTitle;
+                document.getElementById('site-contact-subtitle').value = siteData.contactSubtitle;
+                document.getElementById('site-contact-email-intro').value = siteData.contactEmailIntro;
+                document.getElementById('site-contact-email-address').value = siteData.contactEmail;
+                document.getElementById('site-whatsapp-number').value = siteData.whatsappNumber || '';
+                document.getElementById('site-social-intro').value = siteData.socialIntroText;
+                document.getElementById('site-social-links').value = siteData.socialLinks;
+            }
+            
+            function renderAdminResearchList() {
+                admin.researchList.innerHTML = '';
+                if (researchData.length === 0) {
+                    admin.researchList.innerHTML = `<p class="text-gray-500">Belum ada data riset.</p>`; return;
+                }
+                researchData.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'p-4 border rounded-lg flex justify-between items-center bg-white';
+                    div.innerHTML = `<div><h3 class="font-bold text-lg">${item.title}</h3><p class="text-sm text-gray-600">${item.journal}</p></div><div class="flex space-x-2"><button data-id="${item.id}" class="edit-btn text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></button><button data-id="${item.id}" class="delete-btn text-red-600 hover:text-red-800"><i class="fas fa-trash"></i></button></div>`;
+                    admin.researchList.appendChild(div);
+                });
+            }
+            
+            function resetResearchForm() {
+                admin.researchForm.reset();
+                document.getElementById('research-id').value = '';
+                admin.formTitle.textContent = 'Tambah Riset Baru';
+                admin.cancelEditBtn.classList.add('hidden');
+            }
+            
+            // --- LOGIKA AUTENTIKASI ---
+            function initializeAuth() {
+                // Firebase config will be populated by Netlify's build process
+                const firebaseConfig = {
+                    apiKey: "__FIREBASE_API_KEY__",
+                    authDomain: "__FIREBASE_AUTH_DOMAIN__",
+                    projectId: "__FIREBASE_PROJECT_ID__",
+                    storageBucket: "__FIREBASE_STORAGE_BUCKET__",
+                    messagingSenderId: "__FIREBASE_MESSAGING_SENDER_ID__",
+                    appId: "__FIREBASE_APP_ID__"
+                };
+
+                // Check if placeholders are still present
+                if (firebaseConfig.apiKey.startsWith("__")) {
+                    console.warn("Firebase config not populated. Run this on Netlify to inject environment variables.");
+                    // Optionally disable features or show a message
+                    authUI.loginBtn.disabled = true;
+                    authUI.loginBtn.title = "Konfigurasi Firebase tidak ditemukan.";
+                    return;
+                }
+
+                try {
+                    app = initializeApp(firebaseConfig);
+                    auth = getAuth(app);
+                    db = getFirestore(app);
+                } catch (error) {
+                    console.error("Firebase initialization failed:", error);
+                    alert("Gagal terhubung ke server. Beberapa fitur mungkin tidak berfungsi.");
+                     authUI.loginBtn.disabled = true;
+                     authUI.loginBtn.title = "Gagal terhubung ke server.";
+                     document.getElementById('login-submit-btn').disabled = true;
+                    return;
+                }
+
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        currentUser = user;
+                        authUI.loginBtn.classList.add('hidden');
+                        admin.openBtn.classList.remove('hidden');
+                        authUI.logoutBtn.classList.remove('hidden');
+                        fetchData(user.uid);
+                    } else {
+                        currentUser = null;
+                        authUI.loginBtn.classList.remove('hidden');
+                        admin.openBtn.classList.add('hidden');
+                        authUI.logoutBtn.classList.add('hidden');
+                        fetchData('public-user-id'); 
+                    }
+                });
+            }
+
+            authUI.loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                if (!auth) return;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                signInWithEmailAndPassword(auth, email, password)
+                    .then(() => {
+                        authUI.loginModal.classList.add('hidden');
+                        authUI.loginError.textContent = '';
+                    })
+                    .catch((error) => {
+                        authUI.loginError.textContent = "Email atau password salah.";
+                    });
+            });
+
+            authUI.logoutBtn.addEventListener('click', () => {
+                if (auth) signOut(auth).catch((error) => console.error("Logout error", error));
+            });
+
+            // --- EVENT LISTENERS LAINNYA ---
+            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            portfolio.researchGrid.addEventListener('click', e => { if (e.target.matches('.read-more-btn')) showDetailView(e.target.dataset.id); });
+            portfolio.closeDetailBtn.addEventListener('click', hideDetailView);
+            document.querySelectorAll('#home-link, .nav-link, #mobile-menu a, a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault(); hideDetailView();
+                    const targetElement = document.querySelector(this.getAttribute('href'));
+                    if(targetElement) targetElement.scrollIntoView({ behavior: 'smooth' });
+                    if (!mobileMenu.classList.contains('hidden')) { mobileMenu.classList.add('hidden'); }
+                });
+            });
+
+            authUI.loginBtn.addEventListener('click', () => authUI.loginModal.classList.remove('hidden'));
+            authUI.closeLoginBtn.addEventListener('click', () => authUI.loginModal.classList.add('hidden'));
+            admin.openBtn.addEventListener('click', () => { populateAdminForms(); admin.overlay.classList.remove('hidden'); });
+            admin.closeBtn.addEventListener('click', () => admin.overlay.classList.add('hidden'));
+            admin.cancelEditBtn.addEventListener('click', resetResearchForm);
+
+            admin.tabs.forEach(button => {
+                button.addEventListener('click', () => {
+                    admin.tabs.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    admin.tabContents.forEach(content => content.classList.add('hidden'));
+                    document.getElementById(`admin-tab-${button.dataset.tab}`).classList.remove('hidden');
+                });
+            });
+            
+            admin.generalForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const submitButton = e.submitter;
+                submitButton.disabled = true;
+                submitButton.textContent = 'Menyimpan...';
+
+                const photoFile = document.getElementById('site-profile-photo').files[0];
+                if (photoFile) {
+                    const uploadedUrl = await uploadToCloudinary(photoFile);
+                    if (uploadedUrl) siteData.profilePhotoUrl = uploadedUrl;
+                }
+                siteData.name = document.getElementById('site-name').value;
+                siteData.heroTitle = document.getElementById('site-hero-title').value;
+                siteData.heroSubtitle = document.getElementById('site-hero-subtitle').value;
+                siteData.aboutMe = document.getElementById('site-about-me').value;
+                siteData.skills = document.getElementById('site-skills').value;
+                siteData.contactTitle = document.getElementById('site-contact-title').value;
+                siteData.contactSubtitle = document.getElementById('site-contact-subtitle').value;
+                siteData.contactEmailIntro = document.getElementById('site-contact-email-intro').value;
+                siteData.contactEmail = document.getElementById('site-contact-email-address').value;
+                siteData.whatsappNumber = document.getElementById('site-whatsapp-number').value;
+                siteData.socialIntroText = document.getElementById('site-social-intro').value;
+                siteData.socialLinks = document.getElementById('site-social-links').value;
+                await saveData();
+                renderSiteData();
+                submitButton.disabled = false;
+                submitButton.textContent = 'Simpan Pengaturan';
+                alert('Pengaturan umum berhasil disimpan!');
+            });
+
+            admin.researchForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const submitButton = e.submitter;
+                submitButton.disabled = true;
+                submitButton.textContent = 'Menyimpan...';
+
+                const id = document.getElementById('research-id').value;
+                const imageFile = document.getElementById('image').files[0];
+                let imageUrl = id ? researchData.find(item => item.id === id).image : 'https://placehold.co/600x400/4f46e5/ffffff?text=New+Research';
+                
+                if (imageFile) {
+                    const uploadedUrl = await uploadToCloudinary(imageFile);
+                    if(uploadedUrl) imageUrl = uploadedUrl;
+                }
+
+                const newItem = {
+                    id: id || 'research-' + Date.now(), title: document.getElementById('title').value, author: document.getElementById('author').value, date: document.getElementById('date').value, journal: document.getElementById('journal').value, image: imageUrl, pdfUrl: document.getElementById('pdfUrl').value, abstract: document.getElementById('abstract').value, content: document.getElementById('content').value,
+                };
+                if (id) { researchData[researchData.findIndex(item => item.id === id)] = newItem; } 
+                else { researchData.push(newItem); }
+                await saveData();
+                renderAdminResearchList();
+                renderResearchGrid();
+                resetResearchForm();
+                submitButton.disabled = false;
+                submitButton.textContent = 'Simpan';
+            });
+
+            admin.researchList.addEventListener('click', function(e) {
+                const target = e.target.closest('button');
+                if (!target) return;
+                const id = target.dataset.id;
+                if (target.matches('.edit-btn')) {
+                    const item = researchData.find(i => i.id === id);
+                    document.getElementById('research-id').value = item.id;
+                    document.getElementById('title').value = item.title; document.getElementById('author').value = item.author; document.getElementById('date').value = item.date; document.getElementById('journal').value = item.journal; document.getElementById('pdfUrl').value = item.pdfUrl; document.getElementById('abstract').value = item.abstract; document.getElementById('content').value = item.content;
+                    admin.formTitle.textContent = 'Edit Riset';
+                    admin.cancelEditBtn.classList.remove('hidden');
+                }
+                if (target.matches('.delete-btn')) {
+                    const confirmation = window.confirm('Yakin ingin menghapus riset ini?');
+                    if (confirmation) {
+                        researchData = researchData.filter(item => item.id !== id);
+                        saveData();
+                        renderAdminResearchList();
+                        renderResearchGrid();
+                    }
+                }
+            });
+
+            // --- INISIALISASI ---
+            renderAll(); // Tampilkan data default terlebih dahulu
+            initializeAuth(); // Coba hubungkan ke Firebase setelah halaman siap
+        });
+    </script>
+</body>
+</html>

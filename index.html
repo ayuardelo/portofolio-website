@@ -130,7 +130,7 @@
                     </div>
                     <div id="research-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
                     <div id="more-research-container" class="text-center mt-12 hidden">
-                        <a href="#research-all" id="more-research-btn" class="text-cyan-400 font-semibold hover:underline text-lg">Riset & Publikasi Lainnya &rarr;</a>
+                        <a href="#research-all" id="more-research-btn" class="text-cyan-400 font-semibold hover:underline text-lg">Selengkapnya... &rarr;</a>
                     </div>
                 </div>
             </section>
@@ -450,7 +450,8 @@
                     let iconClass = 'fas fa-link';
                     if (url.includes('linkedin.com')) iconClass = 'fab fa-linkedin';
                     else if (url.includes('github.com')) iconClass = 'fab fa-github';
-                    else if (url.includes('twitter.com')) iconClass = 'fab fa-twitter';
+                    else if (url.includes('twitter.com') || url.includes('x.com')) iconClass = 'fab fa-x-twitter';
+                    else if (url.includes('instagram.com')) iconClass = 'fab fa-instagram';
                     else if (url.includes('facebook.com')) iconClass = 'fab fa-facebook';
                     else if (url.includes('tiktok.com')) iconClass = 'fab fa-tiktok';
                     else if (url.includes('youtube.com')) iconClass = 'fab fa-youtube';

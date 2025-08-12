@@ -198,6 +198,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             let app, auth, db;
+            let dataLoaded = false;
             
             // --- DATA DEFAULT ---
             const defaultSiteData = { name: 'Anas Basuki, S.E.', heroTitle: 'Analis & Peneliti Ekonomi Syariah', heroSubtitle: 'Mendedikasikan diri pada analisis mendalam dan riset inovatif untuk pengembangan sektor keuangan dan ekonomi berbasis syariah.', profilePhotoUrl: 'https://placehold.co/600x600/374151/e5e7eb?text=Foto+Anda', aboutMe: 'Halo! Saya Anas Basuki, S.E., seorang Magister Ekonomi Syariah dengan fokus pada analisis kebijakan fiskal Islam dan pengembangan produk keuangan syariah. Saya menggabungkan pemahaman teori yang kuat dengan kemampuan analisis kuantitatif dan kualitatif untuk menghasilkan wawasan yang berdampak.', skills: 'Keuangan Islam, Fiqh Muamalat, Analisis Kebijakan, Manajemen Zakat & Wakaf, Ekonometrika, Riset Kualitatif', contactTitle: 'Hubungi Saya', contactSubtitle: 'Saya terbuka untuk diskusi, peluang karir, atau kolaborasi.', contactEmailIntro: 'Anda dapat menghubungi saya melalui email di:', contactEmail: 'emailanda@contoh.com', whatsappNumber: '6281234567890', socialIntroText: 'Atau temukan profil profesional saya di:', socialLinks: 'https://linkedin.com/in/namaanda\nhttps://www.youtube.com/channel/namaanda\nhttps://www.tiktok.com/@namaanda',};
@@ -207,16 +208,11 @@
             let researchData = defaultResearchData;
             let currentUser = null;
             
-            // ==================================================================
-            // === PERBAIKAN: TENTUKAN SATU ID DOKUMEN UNTUK PUBLIK ===
-            // ==================================================================
-            // Semua data akan disimpan dan diambil dari dokumen dengan ID ini.
             const publicPortfolioId = "main-portfolio-data";
-
 
             // --- ELEMEN DOM ---
             const adblockWarning = document.getElementById('adblock-warning');
-            const portfolio = { nameHeader: document.getElementById('portfolio-name-header'), heroTitle: document.getElementById('hero-title'), heroSubtitle: document.getElementById('hero-subtitle'), profilePhoto: document.getElementById('profile-photo'), aboutMeText: document.getElementById('about-me-text'), skillsContainer: document.getElementById('skills-container'), contactTitle: document.getElementById('contact-title'), contactSubtitle: document.getElementById('contact-subtitle'), contactEmailIntro: document.getElementById('contact-email-intro'), contactEmail: document.getElementById('contact-email'), contactWhatsapp: document.getElementById('contact-whatsapp'), whatsappNumberText: document.getElementById('whatsapp-number-text'), socialIntroText: document.getElementById('social-intro-text'), socialLinksContainer: document.getElementById('social-links-container'), copyrightText: document.getElementById('copyright-text'), researchGrid: document.getElementById('research-grid'), mainContent: document.getElementById('main-content'), detailView: document.getElementById('detail-view'), closeDetailBtn: document.getElementById('close-detail'), };
+            const portfolio = { nameHeader: document.getElementById('portfolio-name-header'), heroTitle: document.getElementById('hero-title'), heroSubtitle: document.getElementById('hero-subtitle'), profilePhoto: document.getElementById('profile-photo'), aboutMeText: document.getElementById('about-me-text'), skillsContainer: document.getElementById('skills-container'), contactTitle: document.getElementById('contact-title'), contactSubtitle: document.getElementById('contact-subtitle'), contactEmailIntro: document.getElementById('contact-email-intro'), contactEmail: document.getElementById('contact-email'), contactWhatsapp: document.getElementById('contact-whatsapp'), whatsappNumberText: document.getElementById('whatsapp-number-text'), socialIntroText: document.getElementById('social-intro-text'), socialLinksContainer: document.getElementById('social-links-container'), copyrightText: document.getElementById('copyright-text'), researchGrid: document.getElementById('research-grid'), mainContent: document.getElementById('main-content'), detailView: document.getElementById('detail-view'), detailTitle: document.getElementById('detail-title'), detailMeta: document.getElementById('detail-meta'), detailImage: document.getElementById('detail-image'), detailContent: document.getElementById('detail-content'), detailPdfLink: document.getElementById('detail-pdf-link'), closeDetailBtn: document.getElementById('close-detail'), };
             const admin = { overlay: document.getElementById('admin-panel-overlay'), openBtn: document.getElementById('open-admin-btn'), closeBtn: document.getElementById('close-admin-btn'), tabs: document.querySelectorAll('.admin-tab-btn'), tabContents: document.querySelectorAll('.admin-tab-content'), generalForm: document.getElementById('general-settings-form'), generalSubmitBtn: document.getElementById('general-submit-btn'), generalLoader: document.getElementById('general-loader'), researchForm: document.getElementById('research-form'), researchSubmitBtn: document.getElementById('research-submit-btn'), researchLoader: document.getElementById('research-loader'), researchList: document.getElementById('research-list'), cancelEditBtn: document.getElementById('cancel-edit-btn'), formTitle: document.getElementById('form-title'), };
             const authUI = { loginModal: document.getElementById('login-modal-overlay'), loginBtn: document.getElementById('login-btn'), logoutBtn: document.getElementById('logout-btn'), loginForm: document.getElementById('login-form'), closeLoginBtn: document.getElementById('close-login-btn'), loginError: document.getElementById('login-error') };
             const confirmationModal = { overlay: document.getElementById('confirmation-modal-overlay'), title: document.getElementById('confirmation-title'), message: document.getElementById('confirmation-message'), yesBtn: document.getElementById('confirm-yes-btn'), noBtn: document.getElementById('confirm-no-btn') };
@@ -258,21 +254,17 @@
             
             async function fetchData() {
                 if (!db) return; 
-                // Selalu ambil data dari ID dokumen publik yang sudah ditentukan
                 const docRef = doc(db, "portfolios", publicPortfolioId);
                 try {
                     const docSnap = await getDoc(docRef);
                     if (docSnap.exists()) {
-                        // Jika dokumen publik ada, gunakan datanya
                         const data = docSnap.data();
                         siteData = data.siteData;
                         researchData = data.researchData;
                     } else {
-                        // Jika tidak ada, gunakan data default
                         console.log("No public document found! Using default data.");
                         siteData = defaultSiteData;
                         researchData = defaultResearchData;
-                        // Jika admin login untuk pertama kali, langsung buat dokumen publik
                         if (currentUser) {
                             await saveData();
                         }
@@ -283,13 +275,13 @@
                         adblockWarning.classList.remove('hidden');
                      }
                 }
+                dataLoaded = true;
                 renderAll();
+                handleRouteChange(); // Panggil router setelah data dimuat
             }
 
             async function saveData() {
-                // Jangan simpan jika bukan admin
                 if (!currentUser || !db) return;
-                // Selalu simpan ke ID dokumen publik yang sama
                 const docRef = doc(db, "portfolios", publicPortfolioId);
                 await setDoc(docRef, { siteData, researchData });
             }
@@ -363,27 +355,9 @@
                 researchData.forEach(item => {
                     const card = document.createElement('div');
                     card.className = 'bg-gray-800 rounded-lg overflow-hidden border border-gray-700 hover:border-cyan-500/50 transition-all duration-300 transform hover:-translate-y-2';
-                    card.innerHTML = `<img src="${item.image}" alt="${item.title}" class="w-full h-56 object-cover"><div class="p-6"><h3 class="text-xl font-semibold mb-2 text-white">${item.title}</h3><p class="text-gray-400 mb-4 text-sm">${item.abstract}</p><button data-id="${item.id}" class="read-more-btn text-cyan-400 font-semibold hover:underline">Baca Selengkapnya &rarr;</button></div>`;
+                    card.innerHTML = `<img src="${item.image}" alt="${item.title}" class="w-full h-56 object-cover"><div class="p-6"><h3 class="text-xl font-semibold mb-2 text-white">${item.title}</h3><p class="text-gray-400 mb-4 text-sm">${item.abstract}</p><a href="#research/${item.id}" data-id="${item.id}" class="read-more-btn text-cyan-400 font-semibold hover:underline">Baca Selengkapnya &rarr;</a></div>`;
                     portfolio.researchGrid.appendChild(card);
                 });
-            }
-            
-            function showDetailView(id) {
-                const item = researchData.find(p => p.id === id);
-                if (!item) return;
-                document.getElementById('detail-title').textContent = item.title;
-                document.getElementById('detail-meta').innerHTML = `<span>Oleh: ${item.author}</span> &bull; <span>${item.date}</span> &bull; <span>${item.journal}</span>`;
-                document.getElementById('detail-image').src = item.image;
-                document.getElementById('detail-content').innerHTML = item.content;
-                document.getElementById('detail-pdf-link').innerHTML = (item.pdfUrl && item.pdfUrl !== '#') ? `<a href="${item.pdfUrl}" target="_blank" class="bg-cyan-500 text-white font-semibold px-8 py-3 rounded-lg hover:bg-cyan-600 inline-block"><i class="fas fa-download mr-2"></i> Unduh PDF</a>` : '';
-                portfolio.mainContent.classList.add('hidden');
-                portfolio.detailView.classList.remove('hidden');
-                window.scrollTo(0, 0);
-            }
-            
-            function hideDetailView() {
-                portfolio.detailView.classList.add('hidden');
-                portfolio.mainContent.classList.remove('hidden');
             }
             
             function populateAdminForms() {
@@ -442,6 +416,48 @@
                 });
             }
             
+            // ==================================================================
+            // === PERBAIKAN: FUNGSI UNTUK MENGELOLA ROUTING / URL ===
+            // ==================================================================
+            function handleRouteChange() {
+                if (!dataLoaded) return; // Jangan lakukan apa-apa jika data belum siap
+
+                const hash = window.location.hash;
+
+                if (hash.startsWith('#research/')) {
+                    const id = hash.substring(10); // Ambil ID dari '#research/...'
+                    const item = researchData.find(p => p.id === id);
+                    if (item) {
+                        // Tampilkan halaman detail
+                        portfolio.detailTitle.textContent = item.title;
+                        portfolio.detailMeta.innerHTML = `<span>Oleh: ${item.author}</span> &bull; <span>${item.date}</span> &bull; <span>${item.journal}</span>`;
+                        portfolio.detailImage.src = item.image;
+                        portfolio.detailContent.innerHTML = item.content;
+                        portfolio.detailPdfLink.innerHTML = (item.pdfUrl && item.pdfUrl !== '#') ? `<a href="${item.pdfUrl}" target="_blank" class="bg-cyan-500 text-white font-semibold px-8 py-3 rounded-lg hover:bg-cyan-600 inline-block"><i class="fas fa-download mr-2"></i> Unduh PDF</a>` : '';
+                        
+                        portfolio.mainContent.classList.add('hidden');
+                        portfolio.detailView.classList.remove('hidden');
+                        window.scrollTo(0, 0);
+                    } else {
+                        // Jika item tidak ditemukan, kembali ke halaman utama
+                        history.replaceState(null, '', window.location.pathname);
+                        handleRouteChange();
+                    }
+                } else {
+                    // Tampilkan halaman utama
+                    portfolio.detailView.classList.add('hidden');
+                    portfolio.mainContent.classList.remove('hidden');
+                    
+                    // Handle scroll untuk anchor link seperti #about, #contact
+                    if (hash) {
+                        const targetElement = document.querySelector(hash);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
+                }
+            }
+
             // --- LOGIKA AUTENTIKASI ---
             function initializeAuth() {
                 const firebaseConfig = {
@@ -470,7 +486,6 @@
                     return;
                 }
                 
-                // Ambil data publik segera setelah inisialisasi berhasil
                 fetchData();
 
                 onAuthStateChanged(auth, (user) => {
@@ -485,9 +500,9 @@
                         admin.openBtn.classList.add('hidden');
                         authUI.logoutBtn.classList.add('hidden');
                     }
-                    // Setelah status login berubah, kita panggil lagi fetchData
-                    // untuk memastikan data terbaru (jika ada perubahan saat login/logout)
-                    fetchData();
+                    if(dataLoaded) {
+                        fetchData();
+                    }
                 });
             }
 
@@ -521,14 +536,34 @@
 
             // --- EVENT LISTENERS LAINNYA ---
             mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-            portfolio.researchGrid.addEventListener('click', e => { if (e.target.matches('.read-more-btn')) showDetailView(e.target.dataset.id); });
-            portfolio.closeDetailBtn.addEventListener('click', hideDetailView);
-            document.querySelectorAll('#home-link, .nav-link, #mobile-menu a, a[href^="#"]').forEach(anchor => {
+            
+            // PERBAIKAN: Listener untuk tombol "Baca Selengkapnya" sekarang hanya mengubah URL
+            portfolio.researchGrid.addEventListener('click', e => {
+                const readMoreBtn = e.target.closest('.read-more-btn');
+                if (readMoreBtn) {
+                    e.preventDefault();
+                    history.pushState(null, '', readMoreBtn.href);
+                    handleRouteChange();
+                }
+            });
+            
+            // PERBAIKAN: Listener untuk tombol "Kembali" sekarang menggunakan history.back()
+            portfolio.closeDetailBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                history.back();
+            });
+            
+            // PERBAIKAN: Listener untuk semua link navigasi sekarang mengelola history
+            document.querySelectorAll('#home-link, .nav-link, #mobile-menu a, a[href^="#research"].bg-cyan-500').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
-                    e.preventDefault(); hideDetailView();
-                    const targetElement = document.querySelector(this.getAttribute('href'));
-                    if(targetElement) targetElement.scrollIntoView({ behavior: 'smooth' });
-                    if (!mobileMenu.classList.contains('hidden')) { mobileMenu.classList.add('hidden'); }
+                    e.preventDefault();
+                    const href = this.getAttribute('href');
+                    history.pushState(null, '', href);
+                    handleRouteChange();
+                    
+                    if (!mobileMenu.classList.contains('hidden')) { 
+                        mobileMenu.classList.add('hidden'); 
+                    }
                 });
             });
 
@@ -612,12 +647,11 @@
                     if(uploadedUrl) {
                         imageUrl = uploadedUrl;
                     } else {
-                        // Hentikan proses jika upload gagal
                         submitButton.disabled = false;
                         loader.classList.add('hidden');
                         submitButton.classList.remove('hidden');
                         submitButton.textContent = originalText;
-                        return; // Keluar dari fungsi
+                        return;
                     }
                 }
                 
@@ -662,8 +696,10 @@
             });
 
             // --- INISIALISASI ---
-            // renderAll(); // Hapus render awal di sini
-            initializeAuth(); // Cukup panggil initializeAuth, karena ia akan memanggil fetchData
+            // PERBAIKAN: Tambahkan listener untuk event popstate (klik tombol kembali/maju browser)
+            window.addEventListener('popstate', handleRouteChange);
+            
+            initializeAuth();
         });
     </script>
 </body>

@@ -206,6 +206,13 @@
             let siteData = defaultSiteData;
             let researchData = defaultResearchData;
             let currentUser = null;
+            
+            // ==================================================================
+            // === PERBAIKAN: TENTUKAN SATU ID DOKUMEN UNTUK PUBLIK ===
+            // ==================================================================
+            // Semua data akan disimpan dan diambil dari dokumen dengan ID ini.
+            const publicPortfolioId = "main-portfolio-data";
+
 
             // --- ELEMEN DOM ---
             const adblockWarning = document.getElementById('adblock-warning');
@@ -218,16 +225,9 @@
 
             // --- FUNGSI ---
             async function uploadToCloudinary(file) {
-                // ==================================================================
-                // === PERBAIKAN: PENGECEKAN KONFIGURASI LEBIH JELAS ===
-                // ==================================================================
-                // Variabel ini HARUS diisi melalui Netlify Environment Variables
-                // agar bisa diganti saat proses build.
                 const CLOUDINARY_CLOUD_NAME = "__CLOUDINARY_CLOUD_NAME__";
                 const CLOUDINARY_UPLOAD_PRESET = "__CLOUDINARY_UPLOAD_PRESET__";
                 
-                // Jika placeholder masih ada, berarti konfigurasi di Netlify belum diatur.
-                // Berikan pesan error yang jelas kepada pengguna.
                 if (CLOUDINARY_CLOUD_NAME.startsWith("__") || !CLOUDINARY_CLOUD_NAME) {
                     const errorMessage = "Konfigurasi untuk upload gambar tidak ditemukan. \n\nPastikan Anda telah mengatur 'CLOUDINARY_CLOUD_NAME' dan 'CLOUDINARY_UPLOAD_PRESET' di 'Site settings > Build & deploy > Environment' pada dashboard Netlify Anda.";
                     alert(errorMessage);
@@ -246,7 +246,6 @@
                     });
                     const data = await response.json();
                     if (!response.ok) {
-                        // Jika ada error dari Cloudinary, tampilkan pesannya
                         throw new Error(data.error.message || 'Error tidak diketahui dari Cloudinary');
                     }
                     return data.secure_url;
@@ -257,19 +256,23 @@
                 }
             }
             
-            async function fetchData(userId) {
+            async function fetchData() {
                 if (!db) return; 
-                const docRef = doc(db, "portfolios", userId);
+                // Selalu ambil data dari ID dokumen publik yang sudah ditentukan
+                const docRef = doc(db, "portfolios", publicPortfolioId);
                 try {
                     const docSnap = await getDoc(docRef);
                     if (docSnap.exists()) {
+                        // Jika dokumen publik ada, gunakan datanya
                         const data = docSnap.data();
                         siteData = data.siteData;
                         researchData = data.researchData;
                     } else {
-                        console.log("No such document! Creating default data for new user.");
+                        // Jika tidak ada, gunakan data default
+                        console.log("No public document found! Using default data.");
                         siteData = defaultSiteData;
                         researchData = defaultResearchData;
+                        // Jika admin login untuk pertama kali, langsung buat dokumen publik
                         if (currentUser) {
                             await saveData();
                         }
@@ -284,8 +287,10 @@
             }
 
             async function saveData() {
+                // Jangan simpan jika bukan admin
                 if (!currentUser || !db) return;
-                const docRef = doc(db, "portfolios", currentUser.uid);
+                // Selalu simpan ke ID dokumen publik yang sama
+                const docRef = doc(db, "portfolios", publicPortfolioId);
                 await setDoc(docRef, { siteData, researchData });
             }
             
@@ -464,6 +469,9 @@
                     adblockWarning.classList.remove('hidden');
                     return;
                 }
+                
+                // Ambil data publik segera setelah inisialisasi berhasil
+                fetchData();
 
                 onAuthStateChanged(auth, (user) => {
                     if (user) {
@@ -471,14 +479,15 @@
                         authUI.loginBtn.classList.add('hidden');
                         admin.openBtn.classList.remove('hidden');
                         authUI.logoutBtn.classList.remove('hidden');
-                        fetchData(user.uid);
                     } else {
                         currentUser = null;
                         authUI.loginBtn.classList.remove('hidden');
                         admin.openBtn.classList.add('hidden');
                         authUI.logoutBtn.classList.add('hidden');
-                        fetchData('public-user-id'); 
                     }
+                    // Setelah status login berubah, kita panggil lagi fetchData
+                    // untuk memastikan data terbaru (jika ada perubahan saat login/logout)
+                    fetchData();
                 });
             }
 
@@ -653,8 +662,8 @@
             });
 
             // --- INISIALISASI ---
-            renderAll(); // Tampilkan data default terlebih dahulu
-            initializeAuth(); // Coba hubungkan ke Firebase setelah halaman siap
+            // renderAll(); // Hapus render awal di sini
+            initializeAuth(); // Cukup panggil initializeAuth, karena ia akan memanggil fetchData
         });
     </script>
 </body>

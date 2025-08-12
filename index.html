@@ -317,6 +317,14 @@
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileMenuButton = document.getElementById('mobile-menu-button');
 
+            function truncateText(text, maxLength) {
+                if (!text || text.length <= maxLength) {
+                    return text;
+                }
+                const lastSpace = text.substr(0, maxLength).lastIndexOf(' ');
+                return text.substr(0, lastSpace > 0 ? lastSpace : maxLength) + '...';
+            }
+
             async function uploadToCloudinary(file) {
                 const CLOUDINARY_CLOUD_NAME = "__CLOUDINARY_CLOUD_NAME__";
                 const CLOUDINARY_UPLOAD_PRESET = "__CLOUDINARY_UPLOAD_PRESET__";
@@ -466,7 +474,8 @@
                     const card = document.createElement('div');
                     card.className = 'bg-gray-800 rounded-lg overflow-hidden border border-gray-700 hover:border-cyan-500/50 transition-all duration-300 transform hover:-translate-y-2 reveal';
                     card.style.transitionDelay = `${index * 150}ms`;
-                    card.innerHTML = `<img src="${item.image}" alt="${item.title}" class="w-full h-56 object-cover"><div class="p-6"><h3 class="text-xl font-semibold mb-2 text-white">${item.title}</h3><p class="text-gray-400 mb-4 text-sm">${item.abstract}</p><a href="#research/${item.id}" data-id="${item.id}" class="read-more-btn text-cyan-400 font-semibold hover:underline">Baca Selengkapnya &rarr;</a></div>`;
+                    const truncatedAbstract = truncateText(item.abstract, 120);
+                    card.innerHTML = `<img src="${item.image}" alt="${item.title}" class="w-full h-56 object-cover"><div class="p-6"><h3 class="text-xl font-semibold mb-2 text-white">${item.title}</h3><p class="text-gray-400 mb-4 text-sm h-16 overflow-hidden">${truncatedAbstract}</p><a href="#research/${item.id}" data-id="${item.id}" class="read-more-btn text-cyan-400 font-semibold hover:underline">Baca Selengkapnya &rarr;</a></div>`;
                     portfolio.researchGrid.appendChild(card);
                 });
 
@@ -485,7 +494,8 @@
                     const card = document.createElement('div');
                     card.className = 'bg-gray-800 rounded-lg overflow-hidden border border-gray-700 hover:border-cyan-500/50 transition-all duration-300 transform hover:-translate-y-2 reveal';
                     card.style.transitionDelay = `${index * 100}ms`;
-                    card.innerHTML = `<img src="${item.image}" alt="${item.title}" class="w-full h-56 object-cover"><div class="p-6"><h3 class="text-xl font-semibold mb-2 text-white">${item.title}</h3><p class="text-gray-400 mb-4 text-sm">${item.abstract}</p><a href="#research/${item.id}" data-id="${item.id}" class="read-more-btn text-cyan-400 font-semibold hover:underline">Baca Selengkapnya &rarr;</a></div>`;
+                    const truncatedAbstract = truncateText(item.abstract, 120);
+                    card.innerHTML = `<img src="${item.image}" alt="${item.title}" class="w-full h-56 object-cover"><div class="p-6"><h3 class="text-xl font-semibold mb-2 text-white">${item.title}</h3><p class="text-gray-400 mb-4 text-sm h-16 overflow-hidden">${truncatedAbstract}</p><a href="#research/${item.id}" data-id="${item.id}" class="read-more-btn text-cyan-400 font-semibold hover:underline">Baca Selengkapnya &rarr;</a></div>`;
                     portfolio.researchListGrid.appendChild(card);
                 });
                 setupScrollAnimation();

@@ -17,7 +17,6 @@
         .prose a { color: #67e8f9; }
         .prose blockquote { border-left-color: #0891b2; color: #9ca3af; }
         
-        /* Gaya untuk Panel & Modal */
         .modal-overlay { background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(4px); }
         .modal-content { background-color: #f3f4f6; color: #1f2937; }
         .modal-content label { font-weight: 600; }
@@ -25,7 +24,6 @@
         .admin-tab-btn.active { background-color: #3b82f6; color: white; }
         .admin-tab-btn { background-color: #e5e7eb; }
 
-        /* Gaya untuk Indikator Loading */
         .loader {
             border: 4px solid #f3f3f3;
             border-top: 4px solid #3498db;
@@ -36,8 +34,8 @@
         }
         
         .loader-lg {
-            border: 8px solid #4b5563; /* gray-600 */
-            border-top: 8px solid #3b82f6; /* blue-500 */
+            border: 8px solid #4b5563;
+            border-top: 8px solid #3b82f6;
             border-radius: 50%;
             width: 80px;
             height: 80px;
@@ -52,21 +50,18 @@
 </head>
 <body class="text-gray-300">
 
-    <!-- ===== HALAMAN LOADING ===== -->
     <div id="loading-overlay" class="fixed inset-0 bg-gray-900 flex flex-col items-center justify-center z-50 transition-opacity duration-500">
         <div class="loader-lg"></div>
         <p class="text-white text-lg mt-6 font-semibold">Memuat data...</p>
     </div>
 
-    <!-- ===== PESAN PERINGATAN AD-BLOCKER ===== -->
     <div id="adblock-warning" class="hidden bg-red-800 text-white text-center p-3">
         <div class="container mx-auto">
             <i class="fas fa-exclamation-triangle mr-2"></i>
-            <strong>Koneksi Gagal.</strong> Kemungkinan ada pemblokir iklan (Ad-Blocker) yang aktif. Mohon nonaktifkan untuk situs ini agar panel admin dapat berfungsi.
+            <strong>Koneksi Gagal.</strong> Kemungkinan ada pemblokir iklan (Ad-Blocker) yang aktif. Mohon nonaktifkan!.
         </div>
     </div>
 
-    <!-- ===== BAGIAN PORTFOLIO (UNTUK PENGUNJUNG) ===== -->
     <div id="portfolio-content">
         <header id="header" class="bg-gray-900/80 backdrop-blur-lg sticky top-0 z-40 border-b border-gray-700/50">
             <div class="container mx-auto px-6 py-4 flex justify-between items-center">
@@ -151,7 +146,6 @@
         </footer>
     </div>
 
-    <!-- ===== BAGIAN MODAL LOGIN (AWALNYA TERSEMBUNYI) ===== -->
     <div id="login-modal-overlay" class="hidden modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="modal-content w-full max-w-sm p-6 rounded-lg shadow-xl relative">
             <button id="close-login-btn" class="absolute top-2 right-4 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
@@ -173,7 +167,6 @@
         </div>
     </div>
 
-    <!-- ===== BAGIAN ADMIN PANEL (AWALNYA TERSEMBUNYI) ===== -->
     <div id="admin-panel-overlay" class="hidden modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4">
         <div id="admin-panel-content" class="modal-content w-full max-w-6xl max-h-[90vh] overflow-y-auto p-6 rounded-lg shadow-xl relative">
             <button id="close-admin-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
@@ -193,7 +186,6 @@
         </div>
     </div>
     
-    <!-- ===== MODAL KONFIRMASI (BARU) ===== -->
     <div id="confirmation-modal-overlay" class="hidden modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="modal-content w-full max-w-md p-6 rounded-lg shadow-xl text-center">
             <h2 id="confirmation-title" class="text-xl font-bold mb-4">Konfirmasi</h2>
@@ -205,7 +197,6 @@
         </div>
     </div>
 
-    <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -215,9 +206,8 @@
             let app, auth, db;
             let dataLoaded = false;
             
-            // --- DATA DEFAULT (KOSONG) ---
             const defaultSiteData = { 
-                pageTitle: 'Portofolio Profesional',
+                pageTitle: '',
                 name: '', 
                 heroTitle: '', 
                 heroSubtitle: '', 
@@ -244,7 +234,6 @@
             
             const publicPortfolioId = "main-portfolio-data";
 
-            // --- ELEMEN DOM ---
             const loadingOverlay = document.getElementById('loading-overlay');
             const adblockWarning = document.getElementById('adblock-warning');
             const portfolio = { 
@@ -283,7 +272,6 @@
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileMenuButton = document.getElementById('mobile-menu-button');
 
-            // --- FUNGSI ---
             async function uploadToCloudinary(file) {
                 const CLOUDINARY_CLOUD_NAME = "__CLOUDINARY_CLOUD_NAME__";
                 const CLOUDINARY_UPLOAD_PRESET = "__CLOUDINARY_UPLOAD_PRESET__";
@@ -537,7 +525,6 @@
                 }
             }
 
-            // --- LOGIKA AUTENTIKASI ---
             function initializeAuth() {
                 const firebaseConfig = {
                     apiKey: "__FIREBASE_API_KEY__",
@@ -614,7 +601,6 @@
                 if (auth) signOut(auth).catch((error) => console.error("Logout error", error));
             });
 
-            // --- EVENT LISTENERS LAINNYA ---
             mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
             
             portfolio.researchGrid.addEventListener('click', e => {
@@ -776,7 +762,6 @@
                 }
             });
 
-            // --- INISIALISASI ---
             window.addEventListener('popstate', handleRouteChange);
             
             initializeAuth();

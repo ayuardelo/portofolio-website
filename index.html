@@ -34,6 +34,16 @@
             height: 24px;
             animation: spin 1s linear infinite;
         }
+        
+        .loader-lg {
+            border: 8px solid #4b5563; /* gray-600 */
+            border-top: 8px solid #3b82f6; /* blue-500 */
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            animation: spin 1.5s linear infinite;
+        }
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -42,7 +52,13 @@
 </head>
 <body class="text-gray-300">
 
-    <!-- ===== PESAN PERINGATAN AD-BLOCKER (BARU) ===== -->
+    <!-- ===== HALAMAN LOADING (BARU) ===== -->
+    <div id="loading-overlay" class="fixed inset-0 bg-gray-900 flex flex-col items-center justify-center z-50 transition-opacity duration-500">
+        <div class="loader-lg"></div>
+        <p class="text-white text-lg mt-6 font-semibold">Memuat data...</p>
+    </div>
+
+    <!-- ===== PESAN PERINGATAN AD-BLOCKER ===== -->
     <div id="adblock-warning" class="hidden bg-red-800 text-white text-center p-3">
         <div class="container mx-auto">
             <i class="fas fa-exclamation-triangle mr-2"></i>
@@ -127,8 +143,8 @@
         <footer class="bg-gray-900 border-t border-gray-800">
             <div class="container mx-auto px-6 py-8 text-center text-gray-400">
                 <p id="copyright-text"></p>
-                <div id="auth-container" class="mt-4">
-                    <button id="login-btn" class="text-xs text-gray-600 hover:text-gray-400 transition">Admin Login</button>
+                <!-- PERBAIKAN: Tombol login disembunyikan dari sini -->
+                <div id="auth-container" class="mt-4 h-6">
                     <button id="open-admin-btn" class="hidden text-xs text-gray-600 hover:text-gray-400 transition">Admin Panel</button>
                     <button id="logout-btn" class="hidden ml-4 text-xs text-red-500 hover:text-red-400 transition">Logout</button>
                 </div>
@@ -211,10 +227,11 @@
             const publicPortfolioId = "main-portfolio-data";
 
             // --- ELEMEN DOM ---
+            const loadingOverlay = document.getElementById('loading-overlay');
             const adblockWarning = document.getElementById('adblock-warning');
             const portfolio = { nameHeader: document.getElementById('portfolio-name-header'), heroTitle: document.getElementById('hero-title'), heroSubtitle: document.getElementById('hero-subtitle'), profilePhoto: document.getElementById('profile-photo'), aboutMeText: document.getElementById('about-me-text'), skillsContainer: document.getElementById('skills-container'), contactTitle: document.getElementById('contact-title'), contactSubtitle: document.getElementById('contact-subtitle'), contactEmailIntro: document.getElementById('contact-email-intro'), contactEmail: document.getElementById('contact-email'), contactWhatsapp: document.getElementById('contact-whatsapp'), whatsappNumberText: document.getElementById('whatsapp-number-text'), socialIntroText: document.getElementById('social-intro-text'), socialLinksContainer: document.getElementById('social-links-container'), copyrightText: document.getElementById('copyright-text'), researchGrid: document.getElementById('research-grid'), mainContent: document.getElementById('main-content'), detailView: document.getElementById('detail-view'), detailTitle: document.getElementById('detail-title'), detailMeta: document.getElementById('detail-meta'), detailImage: document.getElementById('detail-image'), detailContent: document.getElementById('detail-content'), detailPdfLink: document.getElementById('detail-pdf-link'), closeDetailBtn: document.getElementById('close-detail'), };
             const admin = { overlay: document.getElementById('admin-panel-overlay'), openBtn: document.getElementById('open-admin-btn'), closeBtn: document.getElementById('close-admin-btn'), tabs: document.querySelectorAll('.admin-tab-btn'), tabContents: document.querySelectorAll('.admin-tab-content'), generalForm: document.getElementById('general-settings-form'), generalSubmitBtn: document.getElementById('general-submit-btn'), generalLoader: document.getElementById('general-loader'), researchForm: document.getElementById('research-form'), researchSubmitBtn: document.getElementById('research-submit-btn'), researchLoader: document.getElementById('research-loader'), researchList: document.getElementById('research-list'), cancelEditBtn: document.getElementById('cancel-edit-btn'), formTitle: document.getElementById('form-title'), };
-            const authUI = { loginModal: document.getElementById('login-modal-overlay'), loginBtn: document.getElementById('login-btn'), logoutBtn: document.getElementById('logout-btn'), loginForm: document.getElementById('login-form'), closeLoginBtn: document.getElementById('close-login-btn'), loginError: document.getElementById('login-error') };
+            const authUI = { loginModal: document.getElementById('login-modal-overlay'), logoutBtn: document.getElementById('logout-btn'), loginForm: document.getElementById('login-form'), closeLoginBtn: document.getElementById('close-login-btn'), loginError: document.getElementById('login-error') };
             const confirmationModal = { overlay: document.getElementById('confirmation-modal-overlay'), title: document.getElementById('confirmation-title'), message: document.getElementById('confirmation-message'), yesBtn: document.getElementById('confirm-yes-btn'), noBtn: document.getElementById('confirm-no-btn') };
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -277,7 +294,12 @@
                 }
                 dataLoaded = true;
                 renderAll();
-                handleRouteChange(); // Panggil router setelah data dimuat
+                handleRouteChange(); 
+                
+                loadingOverlay.classList.add('opacity-0');
+                setTimeout(() => {
+                    loadingOverlay.classList.add('hidden');
+                }, 500);
             }
 
             async function saveData() {
@@ -416,39 +438,40 @@
                 });
             }
             
-            // ==================================================================
-            // === PERBAIKAN: FUNGSI UNTUK MENGELOLA ROUTING / URL ===
-            // ==================================================================
             function handleRouteChange() {
-                if (!dataLoaded) return; // Jangan lakukan apa-apa jika data belum siap
+                if (!dataLoaded) return; 
 
                 const hash = window.location.hash;
 
-                if (hash.startsWith('#research/')) {
-                    const id = hash.substring(10); // Ambil ID dari '#research/...'
+                // PERBAIKAN: Tambahkan rute untuk admin
+                if (hash === '#/anas') {
+                    if (!currentUser) {
+                        authUI.loginModal.classList.remove('hidden');
+                    } else {
+                        populateAdminForms();
+                        admin.overlay.classList.remove('hidden');
+                    }
+                } else if (hash.startsWith('#research/')) {
+                    const id = hash.substring(10); 
                     const item = researchData.find(p => p.id === id);
                     if (item) {
-                        // Tampilkan halaman detail
                         portfolio.detailTitle.textContent = item.title;
                         portfolio.detailMeta.innerHTML = `<span>Oleh: ${item.author}</span> &bull; <span>${item.date}</span> &bull; <span>${item.journal}</span>`;
                         portfolio.detailImage.src = item.image;
                         portfolio.detailContent.innerHTML = item.content;
-                        portfolio.detailPdfLink.innerHTML = (item.pdfUrl && item.pdfUrl !== '#') ? `<a href="${item.pdfUrl}" target="_blank" class="bg-cyan-500 text-white font-semibold px-8 py-3 rounded-lg hover:bg-cyan-600 inline-block"><i class="fas fa-download mr-2"></i> Unduh PDF</a>` : '';
+                        portfolio.detailPdfLink.innerHTML = (item.pdfUrl && item.pdfUrl !== '#' && item.pdfUrl.trim() !== '') ? `<a href="${item.pdfUrl}" target="_blank" class="bg-cyan-500 text-white font-semibold px-8 py-3 rounded-lg hover:bg-cyan-600 inline-block"><i class="fas fa-download mr-2"></i> Unduh PDF</a>` : '';
                         
                         portfolio.mainContent.classList.add('hidden');
                         portfolio.detailView.classList.remove('hidden');
                         window.scrollTo(0, 0);
                     } else {
-                        // Jika item tidak ditemukan, kembali ke halaman utama
                         history.replaceState(null, '', window.location.pathname);
                         handleRouteChange();
                     }
                 } else {
-                    // Tampilkan halaman utama
                     portfolio.detailView.classList.add('hidden');
                     portfolio.mainContent.classList.remove('hidden');
                     
-                    // Handle scroll untuk anchor link seperti #about, #contact
                     if (hash) {
                         const targetElement = document.querySelector(hash);
                         if (targetElement) {
@@ -491,12 +514,10 @@
                 onAuthStateChanged(auth, (user) => {
                     if (user) {
                         currentUser = user;
-                        authUI.loginBtn.classList.add('hidden');
                         admin.openBtn.classList.remove('hidden');
                         authUI.logoutBtn.classList.remove('hidden');
                     } else {
                         currentUser = null;
-                        authUI.loginBtn.classList.remove('hidden');
                         admin.openBtn.classList.add('hidden');
                         authUI.logoutBtn.classList.add('hidden');
                     }
@@ -520,6 +541,10 @@
                     .then(() => {
                         authUI.loginModal.classList.add('hidden');
                         authUI.loginError.textContent = '';
+                        // PERBAIKAN: Setelah login, hapus hash dan buka panel admin
+                        history.replaceState(null, '', window.location.pathname);
+                        populateAdminForms();
+                        admin.overlay.classList.remove('hidden');
                     })
                     .catch((error) => {
                         authUI.loginError.textContent = "Email atau password salah.";
@@ -537,7 +562,6 @@
             // --- EVENT LISTENERS LAINNYA ---
             mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
             
-            // PERBAIKAN: Listener untuk tombol "Baca Selengkapnya" sekarang hanya mengubah URL
             portfolio.researchGrid.addEventListener('click', e => {
                 const readMoreBtn = e.target.closest('.read-more-btn');
                 if (readMoreBtn) {
@@ -547,13 +571,11 @@
                 }
             });
             
-            // PERBAIKAN: Listener untuk tombol "Kembali" sekarang menggunakan history.back()
             portfolio.closeDetailBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 history.back();
             });
             
-            // PERBAIKAN: Listener untuk semua link navigasi sekarang mengelola history
             document.querySelectorAll('#home-link, .nav-link, #mobile-menu a, a[href^="#research"].bg-cyan-500').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -567,7 +589,6 @@
                 });
             });
 
-            authUI.loginBtn.addEventListener('click', () => authUI.loginModal.classList.remove('hidden'));
             authUI.closeLoginBtn.addEventListener('click', () => authUI.loginModal.classList.add('hidden'));
             admin.openBtn.addEventListener('click', () => { populateAdminForms(); admin.overlay.classList.remove('hidden'); });
             admin.closeBtn.addEventListener('click', () => admin.overlay.classList.add('hidden'));
@@ -696,7 +717,6 @@
             });
 
             // --- INISIALISASI ---
-            // PERBAIKAN: Tambahkan listener untuk event popstate (klik tombol kembali/maju browser)
             window.addEventListener('popstate', handleRouteChange);
             
             initializeAuth();

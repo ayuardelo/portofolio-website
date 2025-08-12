@@ -192,16 +192,10 @@
 
     <!-- Firebase SDK -->
     <script type="module">
-        // ==================================================================
-        // === PERBAIKAN 1: IMPORT DILAKUKAN DI TOP-LEVEL MODULE ===
-        // ==================================================================
-        // Fungsi-fungsi Firebase diimpor di sini, di luar event listener mana pun.
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Seluruh logika aplikasi dibungkus dalam DOMContentLoaded untuk memastikan
-        // semua elemen HTML sudah siap sebelum dimanipulasi oleh JavaScript.
         document.addEventListener('DOMContentLoaded', () => {
             let app, auth, db;
             
@@ -224,13 +218,23 @@
 
             // --- FUNGSI ---
             async function uploadToCloudinary(file) {
+                // ==================================================================
+                // === PERBAIKAN: PENGECEKAN KONFIGURASI LEBIH JELAS ===
+                // ==================================================================
+                // Variabel ini HARUS diisi melalui Netlify Environment Variables
+                // agar bisa diganti saat proses build.
                 const CLOUDINARY_CLOUD_NAME = "__CLOUDINARY_CLOUD_NAME__";
                 const CLOUDINARY_UPLOAD_PRESET = "__CLOUDINARY_UPLOAD_PRESET__";
                 
+                // Jika placeholder masih ada, berarti konfigurasi di Netlify belum diatur.
+                // Berikan pesan error yang jelas kepada pengguna.
                 if (CLOUDINARY_CLOUD_NAME.startsWith("__") || !CLOUDINARY_CLOUD_NAME) {
-                    alert("Konfigurasi Cloudinary tidak ditemukan. Deploy ulang di Netlify.");
+                    const errorMessage = "Konfigurasi untuk upload gambar tidak ditemukan. \n\nPastikan Anda telah mengatur 'CLOUDINARY_CLOUD_NAME' dan 'CLOUDINARY_UPLOAD_PRESET' di 'Site settings > Build & deploy > Environment' pada dashboard Netlify Anda.";
+                    alert(errorMessage);
+                    console.error(errorMessage);
                     return null;
                 }
+
                 const formData = new FormData();
                 formData.append('file', file);
                 formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
@@ -242,7 +246,8 @@
                     });
                     const data = await response.json();
                     if (!response.ok) {
-                        throw new Error(data.error.message || 'Error uploading to Cloudinary');
+                        // Jika ada error dari Cloudinary, tampilkan pesannya
+                        throw new Error(data.error.message || 'Error tidak diketahui dari Cloudinary');
                     }
                     return data.secure_url;
                 } catch (error) {
@@ -546,7 +551,14 @@
                 const photoFile = document.getElementById('site-profile-photo').files[0];
                 if (photoFile) {
                     const uploadedUrl = await uploadToCloudinary(photoFile);
-                    if (uploadedUrl) siteData.profilePhotoUrl = uploadedUrl;
+                    if (uploadedUrl) {
+                        siteData.profilePhotoUrl = uploadedUrl;
+                    } else {
+                        submitButton.disabled = false;
+                        loader.classList.add('hidden');
+                        submitButton.textContent = 'Simpan Pengaturan';
+                        return;
+                    }
                 }
                 siteData.name = document.getElementById('site-name').value;
                 siteData.heroTitle = document.getElementById('site-hero-title').value;
